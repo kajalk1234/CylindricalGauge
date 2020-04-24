@@ -14,7 +14,7 @@
     "powerbi-visuals-utils-testutils": "2.2.1",
     "powerbi-visuals-utils-tooltiputils": "^1.1.1",
     "powerbi-visuals-utils-typeutils": "1.2.0",
-    "typescript": "next"
+    "typescript": "3.4.5"
   },
   "devDependencies": {
     "tslint": "^5.20.0",

@@ -174,7 +174,6 @@ module powerbi.extensibility.visual {
                 const index: number = dataView.categorical.values[iCount].source.index;
                 dataValues[index] = <number>dataView.categorical.values[iCount].values[0];
             }
-            debugger;
             const data: IProgressIndicatorValues = CylindricalGauge.GETDEFAULTDATA();
             if (dataView && dataView.categorical) {
                 let index: number;
@@ -363,7 +362,6 @@ module powerbi.extensibility.visual {
         // Update is called for data updates, resizes & formatting changes //
         // tslint:disable-next-line:cyclomatic-complexity
         private updateSetting(options: VisualUpdateOptions) {
-            debugger;
             const dataView: DataView = this.dataView = options.dataViews[0];
             this.data = null;
             this.data1 = null;
@@ -487,100 +485,99 @@ module powerbi.extensibility.visual {
             }
         }
         public update(options: VisualUpdateOptions): void {
-            this.events.renderingStarted(options);
-
-            this.margins = {
-                bottom: 30,
-                small: 20,
-                big: 0
-            };
-            this.svg.selectAll('.cylinder').remove();
-            this.svg.selectAll('.yLabels').remove();
-            this.svg.selectAll('line').remove();
-            this.rootElement.selectAll('.ErrorMessage').remove();
-
-            if (options.viewport.width <= 50) {
-                return;
-            }
-            const mainGroup: d3.Selection<SVGElement> = this.svg.append('g').classed('cylinder', true);
-            this.gradient = mainGroup.append('svg:linearGradient');
-            this.gradient1 = mainGroup.append('svg:linearGradient');
-            this.gradient2 = mainGroup.append('svg:linearGradient');
-            this.gradient3 = mainGroup.append('svg:linearGradient');
-            this.gradient4 = mainGroup.append('svg:linearGradient');
-            this.backRect = mainGroup.append('rect');
-            this.backCircle = mainGroup.append('ellipse');
-            this.zones = mainGroup.append('g').classed('zones', true);
-            this.zone1 = mainGroup.append('ellipse').classed('zone1', true);
-            this.zone2 = mainGroup.append('ellipse').classed('zone2', true);
-            this.zone3 = mainGroup.append('ellipse').classed('zone3', true);
-            this.zone4 = mainGroup.append('ellipse').classed('zone4', true);
-            this.topCircle = mainGroup.append('ellipse');
-            this.fillRect1 = mainGroup.append('rect').classed('front_rect1', true);
-            this.fillRect2 = mainGroup.append('rect').classed('front_rect2', true);
-            this.fillCircle = mainGroup.append('ellipse').classed('top', true);
-            this.highlightCircle = mainGroup.append('ellipse').classed('highlightCircle', true);
-            this.tempMarkings = this.svg.append('g').attr('class', 'yLabels axis');
-            this.axisMarking = this.svg.append('line').classed('highlight_line', true);
-            this.bottomCircle = mainGroup.append('ellipse').classed('bottom', true);
-            this.targetCircle = mainGroup.append('ellipse').classed('Target', true);
-            //target range circles
-            this.greaterCircle = mainGroup.append('ellipse').classed('targetcircle_greater', true);
-            this.lessCircle = mainGroup.append('ellipse').classed('targetcircle_less', true);
-            this.zoneLines = mainGroup.append('g').classed('zoneLines', true);
-            this.text = mainGroup.append('text');
-            this.viewport = options.viewport;
-            this.isActual = false;
-            this.isMin = false;
-            this.isMax = false;
-            this.isTarget = false;
-            const dataViewOptions: any = options.dataViews[0];
-            if (!options.dataViews || 0 === options.dataViews.length) {
-                return;
-            }
-            const dataViewOptionsCatValues: any = dataViewOptions.categorical.values;
-            this.highlight = dataViewOptionsCatValues[0].highlights ? true : false;
-            if (this.highlight) {
-                this.highlightValue = dataViewOptionsCatValues[0].highlights[0] === null ? 0
-                    : <number>dataViewOptionsCatValues[0].highlights[0];
-                if (this.isTarget) {
-                    this.highlightTarget = <number>dataViewOptionsCatValues[1].highlights[0];
+            try {
+                this.events.renderingStarted(options);
+                this.margins = {
+                    bottom: 30,
+                    small: 20,
+                    big: 0
+                };
+                this.svg.selectAll('.cylinder').remove();
+                this.svg.selectAll('.yLabels').remove();
+                this.svg.selectAll('line').remove();
+                this.rootElement.selectAll('.ErrorMessage').remove();
+                if (options.viewport.width <= 50) {
+                    return;
                 }
-            }
-            for (let iCatValue: number = 0; iCatValue < dataViewOptionsCatValues.length; iCatValue++) {
+                const mainGroup: d3.Selection<SVGElement> = this.svg.append('g').classed('cylinder', true);
+                this.gradient = mainGroup.append('svg:linearGradient');
+                this.gradient1 = mainGroup.append('svg:linearGradient');
+                this.gradient2 = mainGroup.append('svg:linearGradient');
+                this.gradient3 = mainGroup.append('svg:linearGradient');
+                this.gradient4 = mainGroup.append('svg:linearGradient');
+                this.backRect = mainGroup.append('rect');
+                this.backCircle = mainGroup.append('ellipse');
+                this.zones = mainGroup.append('g').classed('zones', true);
+                this.zone1 = mainGroup.append('ellipse').classed('zone1', true);
+                this.zone2 = mainGroup.append('ellipse').classed('zone2', true);
+                this.zone3 = mainGroup.append('ellipse').classed('zone3', true);
+                this.zone4 = mainGroup.append('ellipse').classed('zone4', true);
+                this.topCircle = mainGroup.append('ellipse');
+                this.fillRect1 = mainGroup.append('rect').classed('front_rect1', true);
+                this.fillRect2 = mainGroup.append('rect').classed('front_rect2', true);
+                this.fillCircle = mainGroup.append('ellipse').classed('top', true);
+                this.highlightCircle = mainGroup.append('ellipse').classed('highlightCircle', true);
+                this.tempMarkings = this.svg.append('g').attr('class', 'yLabels axis');
+                this.axisMarking = this.svg.append('line').classed('highlight_line', true);
+                this.bottomCircle = mainGroup.append('ellipse').classed('bottom', true);
+                this.targetCircle = mainGroup.append('ellipse').classed('Target', true);
+                //target range circles
+                this.greaterCircle = mainGroup.append('ellipse').classed('targetcircle_greater', true);
+                this.lessCircle = mainGroup.append('ellipse').classed('targetcircle_less', true);
+                this.zoneLines = mainGroup.append('g').classed('zoneLines', true);
+                this.text = mainGroup.append('text');
+                this.viewport = options.viewport;
+                this.isActual = false;
+                this.isMin = false;
+                this.isMax = false;
+                this.isTarget = false;
+                const dataViewOptions: any = options.dataViews[0];
+                if (!options.dataViews || 0 === options.dataViews.length) {
+                    return;
+                }
+                const dataViewOptionsCatValues: any = dataViewOptions.categorical.values;
+                this.highlight = dataViewOptionsCatValues[0].highlights ? true : false;
+                if (this.highlight) {
+                    this.highlightValue = dataViewOptionsCatValues[0].highlights[0] === null ? 0
+                        : <number>dataViewOptionsCatValues[0].highlights[0];
+                    if (this.isTarget) {
+                        this.highlightTarget = <number>dataViewOptionsCatValues[1].highlights[0];
+                    }
+                }
+                for (let iCatValue: number = 0; iCatValue < dataViewOptionsCatValues.length; iCatValue++) {
 
-                const dataViewRole: any = dataViewOptionsCatValues[iCatValue].source.roles;
-                if (dataViewRole.hasOwnProperty('Values')) {
-                    this.isActual = true;
+                    const dataViewRole: any = dataViewOptionsCatValues[iCatValue].source.roles;
+                    if (dataViewRole.hasOwnProperty('Values')) {
+                        this.isActual = true;
+                    }
+                    if (dataViewRole.hasOwnProperty('TargetValue')) {
+                        this.isTarget = true;
+                    }
+                    if (dataViewRole.hasOwnProperty('Min')) {
+                        this.isMin = true;
+                    }
+                    if (dataViewRole.hasOwnProperty('Max')) {
+                        this.isMax = true;
+                    }
                 }
-                if (dataViewRole.hasOwnProperty('TargetValue')) {
-                    this.isTarget = true;
-                }
-                if (dataViewRole.hasOwnProperty('Min')) {
-                    this.isMin = true;
-                }
-                if (dataViewRole.hasOwnProperty('Max')) {
-                    this.isMax = true;
-                }
-            }
+                if (!this.isActual) {
+                    const message: string = 'Please add "Actual Value" field';
+                    this.rootElement
+                        .append('div')
+                        .classed('ErrorMessage', true)
+                        .text(message)
+                        .attr('title', message);
 
-            if (!this.isActual) {
-                const message: string = 'Please add "Actual Value" field';
-                this.rootElement
-                    .append('div')
-                    .classed('ErrorMessage', true)
-                    .text(message)
-                    .attr('title', message);
-
-                return;
+                    return;
+                }
+                this.updateSetting(options);
+                this.getFormatter(options);
+                this.updateHighlight(options);
+                this.renderTooltip();
+                this.events.renderingFinished(options);
+            } catch (exception) {
+                this.events.renderingFailed(options, exception);
             }
-            debugger;
-            this.updateSetting(options);
-            this.getFormatter(options);
-            this.updateHighlight(options);
-            debugger;
-            this.renderTooltip();
-            this.events.renderingFinished(options);
         }
 
         private getFormattedData(value: number, displayUnits: number, precision: number, format: string): string {
@@ -622,45 +619,34 @@ module powerbi.extensibility.visual {
                 displayName: 'Actual Value',
                 value: (this.highlight ? this.highlightValue : this.data1.value).toString()
             });
-            console.log(this.highlightValue.toString());
-            console.log(this.data1.value.toString());
-
             if (this.isTarget) {
                 this.toolTipInfo.push({
                     displayName: 'Target Value',
                     value: (this.highlight ? this.highlightTarget : this.data1.targetValue).toString()
                 });
             }
-            console.log(this.highlightTarget.toString());
-            console.log(this.data1.targetValue.toString());
             if (this.isMin) {
                 this.toolTipInfo.push({
                     displayName: 'Min Value',
                     value: (this.data.minValue === null) ? '(Blank)' : (this.data.minValue).toString()
                 });
             }
-            console.log((this.data.minValue).toString());
-            // console.log(this.data1.value.toString());
             if (this.isMax) {
                 this.toolTipInfo.push({
                     displayName: 'Max Value',
                     value: (this.data.maxValue === null) ? '(Blank)' : (this.data.minValue).toString()
                 });
             }
-            console.log((this.data.minValue).toString());
-          //  console.log(this.data1.value.toString());
 
             //const tooltipbg = this.svg.selectAll('.cylinder').data(toolTipInfo);
             this.tooltipServiceWrapper.addTooltip(d3.selectAll('.cylinder'),
                 (tooltipEvent: TooltipEventArgs<number>) => this.toolTipInfo,
                 (tooltipEvent: TooltipEventArgs<number>) => null);
-               
 
         }
 
         private getFormatter(options: VisualUpdateOptions): void {
             let displayVal: number = 0;
-            debugger;
             const valLen: number = this.data1.max.toString().length;
             if (valLen > 9) {
                 displayVal = 1e9;
@@ -1267,7 +1253,6 @@ module powerbi.extensibility.visual {
             const a: IProgressIndicatorValues = CylindricalGauge.GETDEFAULTDATA();
 
             if (!this.data) {
-                debugger;
                 this.data = CylindricalGauge.GETDEFAULTDATA();
             }
             let objectName: string;
@@ -1353,7 +1338,6 @@ module powerbi.extensibility.visual {
                     default:
                         break;
                 }
-
                 return objectEnum;
             }
         }
